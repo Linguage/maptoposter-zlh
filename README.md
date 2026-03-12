@@ -1,128 +1,145 @@
-# City Map Poster Generator
+# 城市地图海报生成器
 
-Generate beautiful, minimalist map posters for any city in the world.
+[中文](README.md) | [English](README_en.md)
+
+为世界任何城市生成精美极简风格的地图海报。
 
 <img src="posters/singapore_neon_cyberpunk_20260108_184503.png" width="250">
 <img src="posters/dubai_midnight_blue_20260108_174920.png" width="250">
 
-## Examples
+## 示例
 
-
-| Country      | City           | Theme           | Poster |
+| 国家 | 城市 | 主题 | 海报 |
 |:------------:|:--------------:|:---------------:|:------:|
-| USA          | San Francisco  | sunset          | <img src="posters/san_francisco_sunset_20260108_184122.png" width="250"> |
-| Spain        | Barcelona      | warm_beige      | <img src="posters/barcelona_warm_beige_20260108_172924.png" width="250"> |
-| Italy        | Venice         | blueprint       | <img src="posters/venice_blueprint_20260108_165527.png" width="250"> |
-| Japan        | Tokyo          | japanese_ink    | <img src="posters/tokyo_japanese_ink_20260108_165830.png" width="250"> |
-| India        | Mumbai         | contrast_zones  | <img src="posters/mumbai_contrast_zones_20260108_170325.png" width="250"> |
-| Morocco      | Marrakech      | terracotta      | <img src="posters/marrakech_terracotta_20260108_180821.png" width="250"> |
-| Singapore    | Singapore      | neon_cyberpunk  | <img src="posters/singapore_neon_cyberpunk_20260108_184503.png" width="250"> |
-| Australia    | Melbourne      | forest          | <img src="posters/melbourne_forest_20260108_181459.png" width="250"> |
-| UAE          | Dubai          | midnight_blue   | <img src="posters/dubai_midnight_blue_20260108_174920.png" width="250"> |
+| 美国 | 旧金山 | sunset | <img src="posters/san_francisco_sunset_20260108_184122.png" width="250"> |
+| 西班牙 | 巴塞罗那 | warm_beige | <img src="posters/barcelona_warm_beige_20260108_172924.png" width="250"> |
+| 意大利 | 威尼斯 | blueprint | <img src="posters/venice_blueprint_20260108_165527.png" width="250"> |
+| 日本 | 东京 | japanese_ink | <img src="posters/tokyo_japanese_ink_20260108_165830.png" width="250"> |
+| 印度 | 孟买 | contrast_zones | <img src="posters/mumbai_contrast_zones_20260108_170325.png" width="250"> |
+| 摩洛哥 | 马拉喀什 | terracotta | <img src="posters/marrakech_terracotta_20260108_180821.png" width="250"> |
+| 新加坡 | 新加坡 | neon_cyberpunk | <img src="posters/singapore_neon_cyberpunk_20260108_184503.png" width="250"> |
+| 澳大利亚 | 墨尔本 | forest | <img src="posters/melbourne_forest_20260108_181459.png" width="250"> |
+| 阿联酋 | 迪拜 | midnight_blue | <img src="posters/dubai_midnight_blue_20260108_174920.png" width="250"> |
 
-## Installation
+## 安装
 
 ```bash
 pip install -r requirements.txt
 ```
 
-## Usage
+## 使用方法
 
 ```bash
-python create_map_poster.py --city <city> --country <country> [options]
+python create_map_poster.py --city <城市> --country <国家> [选项]
 ```
 
-### Options
+### 命令行参数
 
-| Option | Short | Description | Default |
-|--------|-------|-------------|---------|
-| `--city` | `-c` | City name | required |
-| `--country` | `-C` | Country name | required |
-| `--theme` | `-t` | Theme name | feature_based |
-| `--distance` | `-d` | Map radius in meters | 29000 |
-| `--list-themes` | | List all available themes | |
+| 参数 | 短参数 | 描述 | 默认值 |
+|------|--------|------|--------|
+| `--city` | `-c` | 城市名称 | 必需 |
+| `--country` | `-C` | 国家名称 | 必需 |
+| `--theme` | `-t` | 主题名称 | feature_based |
+| `--distance` | `-d` | 地图半径（米） | 29000 |
+| `--ratio` | `-r` | 画幅比例（宽:高） | 1:1 |
+| `--landmark` | `-l` | 地标名称 | 无 |
+| `--coords` | | 自定义坐标 "lat,lon" | 无 |
+| `--stretch` | `-s` | 拉伸模式标志 | 无 |
+| `--output-dir` | `-o` | 输出目录 | generated_posters |
+| `--list-themes` | | 列出所有主题 | |
 
-### Examples
+### 使用示例
 
 ```bash
-# Iconic grid patterns
-python create_map_poster.py -c "New York" -C "USA" -t noir -d 12000           # Manhattan grid
-python create_map_poster.py -c "Barcelona" -C "Spain" -t warm_beige -d 8000   # Eixample district
+# 经典网格格局
+python create_map_poster.py -c "New York" -C "USA" -t noir -d 12000           # 曼哈顿网格
+python create_map_poster.py -c "Barcelona" -C "Spain" -t warm_beige -d 8000   # 塞尔达区块
 
-# Waterfront & canals
-python create_map_poster.py -c "Venice" -C "Italy" -t blueprint -d 4000       # Canal network
-python create_map_poster.py -c "Amsterdam" -C "Netherlands" -t ocean -d 6000  # Concentric canals
-python create_map_poster.py -c "Dubai" -C "UAE" -t midnight_blue -d 15000     # Palm & coastline
+# 水岸与运河
+python create_map_poster.py -c "Venice" -C "Italy" -t blueprint -d 4000       # 运河网络
+python create_map_poster.py -c "Amsterdam" -C "Netherlands" -t ocean -d 6000  # 同心圆运河
+python create_map_poster.py -c "Dubai" -C "UAE" -t midnight_blue -d 15000     # 棕榈岛与海岸线
 
-# Radial patterns
-python create_map_poster.py -c "Paris" -C "France" -t pastel_dream -d 10000   # Haussmann boulevards
-python create_map_poster.py -c "Moscow" -C "Russia" -t noir -d 12000          # Ring roads
+# 放射状格局
+python create_map_poster.py -c "Paris" -C "France" -t pastel_dream -d 10000   # 奥斯曼大道
+python create_map_poster.py -c "Moscow" -C "Russia" -t noir -d 12000          # 环形公路
 
-# Organic old cities
-python create_map_poster.py -c "Tokyo" -C "Japan" -t japanese_ink -d 15000    # Dense organic streets
-python create_map_poster.py -c "Marrakech" -C "Morocco" -t terracotta -d 5000 # Medina maze
-python create_map_poster.py -c "Rome" -C "Italy" -t warm_beige -d 8000        # Ancient layout
+# 有机老城
+python create_map_poster.py -c "Tokyo" -C "Japan" -t japanese_ink -d 15000    # 密集有机街道
+python create_map_poster.py -c "Marrakech" -C "Morocco" -t terracotta -d 5000 # 麦地那迷宫
+python create_map_poster.py -c "Rome" -C "Italy" -t warm_beige -d 8000        # 古老布局
 
-# Coastal cities
-python create_map_poster.py -c "San Francisco" -C "USA" -t sunset -d 10000    # Peninsula grid
-python create_map_poster.py -c "Sydney" -C "Australia" -t ocean -d 12000      # Harbor city
-python create_map_poster.py -c "Mumbai" -C "India" -t contrast_zones -d 18000 # Coastal peninsula
+# 沿海城市
+python create_map_poster.py -c "San Francisco" -C "USA" -t sunset -d 10000    # 半岛网格
+python create_map_poster.py -c "Sydney" -C "Australia" -t ocean -d 12000      # 海港城市
+python create_map_poster.py -c "Mumbai" -C "India" -t contrast_zones -d 18000 # 沿海半岛
 
-# River cities
-python create_map_poster.py -c "London" -C "UK" -t noir -d 15000              # Thames curves
-python create_map_poster.py -c "Budapest" -C "Hungary" -t copper_patina -d 8000  # Danube split
+# 河流城市
+python create_map_poster.py -c "London" -C "UK" -t noir -d 15000              # 泰晤士河曲线
+python create_map_poster.py -c "Budapest" -C "Hungary" -t copper_patina -d 8000  # 多瑙河分界
 
-# List available themes
+# 自定义画幅比例 (16:9 横屏)
+python create_map_poster.py -c "Chengdu" -C "China" -t midnight_blue -r 16:9
+
+# 地标定位
+python create_map_poster.py -c "Beijing" -C "China" -t noir -l "Tiananmen Square"
+
+# 自定义坐标
+python create_map_poster.py -c "Beijing" -C "China" -t noir --coords "39.91,116.40"
+
+# 列出所有主题
 python create_map_poster.py --list-themes
 ```
 
-### Distance Guide
+### 距离参考指南
 
-| Distance | Best for |
-|----------|----------|
-| 4000-6000m | Small/dense cities (Venice, Amsterdam center) |
-| 8000-12000m | Medium cities, focused downtown (Paris, Barcelona) |
-| 15000-20000m | Large metros, full city view (Tokyo, Mumbai) |
+| 距离 | 适用场景 |
+|------|----------|
+| 4000-6000m | 小型/密集城市（威尼斯、阿姆斯特丹中心区） |
+| 8000-12000m | 中等城市、聚焦市中心（巴黎、巴塞罗那） |
+| 15000-20000m | 大都市、完整城市视图（东京、孟买） |
 
-## Themes
+## 17种主题
 
-17 themes available in `themes/` directory:
+| 主题名称 | 风格描述 |
+|:---------|:---------|
+| `feature_based` | 经典黑白风格，道路层次分明 |
+| `gradient_roads` | 平滑渐变阴影 |
+| `contrast_zones` | 高对比度城市密度 |
+| `noir` | 纯黑背景配白/灰道路，现代画廊美学 |
+| `midnight_blue` | 深海军蓝背景配金/铜色道路，奢华地图集美学 |
+| `blueprint` | 经典建筑蓝图，技术绘图美学 |
+| `neon_cyberpunk` | 深色背景配电光粉/青色，大胆夜城氛围 |
+| `warm_beige` | 温暖中性调配棕褐色，复古地图美学 |
+| `pastel_dream` | 柔和粉彩配灰蓝和淡紫，梦幻艺术美学 |
+| `japanese_ink` | 传统水墨风格，极简主义配微红点缀 |
+| `forest` | 深绿和鼠尾草色调，有机植物美学 |
+| `ocean` | 多种蓝色和青色，完美适合沿海城市 |
+| `terracotta` | 地中海温暖，焦橙和陶土色调配奶油底 |
+| `sunset` | 温暖橙色和粉色配柔桃色，梦幻黄金时刻 |
+| `autumn` | 焦橙、深红、金黄，季节温暖 |
+| `copper_patina` | 氧化铜美学，青绿锈层配铜色点缀 |
+| `monochrome_blue` | 单一蓝色家族配不同饱和度，干净连贯 |
 
-| Theme | Style |
-|-------|-------|
-| `feature_based` | Classic black & white with road hierarchy |
-| `gradient_roads` | Smooth gradient shading |
-| `contrast_zones` | High contrast urban density |
-| `noir` | Pure black background, white roads |
-| `midnight_blue` | Navy background with gold roads |
-| `blueprint` | Architectural blueprint aesthetic |
-| `neon_cyberpunk` | Dark with electric pink/cyan |
-| `warm_beige` | Vintage sepia tones |
-| `pastel_dream` | Soft muted pastels |
-| `japanese_ink` | Minimalist ink wash style |
-| `forest` | Deep greens and sage |
-| `ocean` | Blues and teals for coastal cities |
-| `terracotta` | Mediterranean warmth |
-| `sunset` | Warm oranges and pinks |
-| `autumn` | Seasonal burnt oranges and reds |
-| `copper_patina` | Oxidized copper aesthetic |
-| `monochrome_blue` | Single blue color family |
+## 输出格式
 
-## Output
+生成的海报默认保存至 `generated_posters/` 目录，脚本会在首次运行时自动创建该目录。该目录已加入忽略规则，适合存放个人生成结果。
 
-Posters are saved to `posters/` directory with format:
+`posters/` 目录仅保留 README 中展示用的示例海报，并会同步到仓库。
+
+输出文件格式：
 ```
-{city}_{theme}_{YYYYMMDD_HHMMSS}.png
+{城市}_{主题}_{YYYYMMDD_HHMMSS}.png
 ```
 
-## Adding Custom Themes
+## 添加自定义主题
 
-Create a JSON file in `themes/` directory:
+在 `themes/` 目录创建 JSON 文件：
 
 ```json
 {
   "name": "My Theme",
-  "description": "Description of the theme",
+  "description": "主题描述",
   "bg": "#FFFFFF",
   "text": "#000000",
   "gradient_color": "#FFFFFF",
@@ -137,118 +154,123 @@ Create a JSON file in `themes/` directory:
 }
 ```
 
-## Project Structure
+## 项目结构
 
 ```
-map_poster/
-├── create_map_poster.py          # Main script
-├── themes/               # Theme JSON files
-├── fonts/                # Roboto font files
-├── posters/              # Generated posters
-└── README.md
+maptoposter/
+├── create_map_poster.py    # 主程序脚本
+├── themes/                 # 主题 JSON 文件
+├── fonts/                  # Roboto 字体文件
+├── posters/                # README 示例海报
+├── generated_posters/      # 本地生成结果（已忽略）
+└── cache/                  # 缓存目录
 ```
 
-## Hacker's Guide
+## 最近修改 (2025-01-19)
 
-Quick reference for contributors who want to extend or modify the script.
+- **API超时修复** - 超时时间从1秒增加到10秒
+- **坐标定位优化** - 优先选择城市级结果，修复大城市定位偏移问题
+- **自定义画幅功能** - 新增 `--ratio` 参数支持任意比例
 
-### Architecture Overview
+## 技术细节
+
+### 架构概览
 
 ```
 ┌─────────────────┐     ┌──────────────┐     ┌─────────────────┐
-│   CLI Parser    │────▶│  Geocoding   │────▶│  Data Fetching  │
+│   CLI 解析器    │────▶│  地理编码    │────▶│   数据获取      │
 │   (argparse)    │     │  (Nominatim) │     │    (OSMnx)      │
 └─────────────────┘     └──────────────┘     └─────────────────┘
-                                                     │
-                        ┌──────────────┐             ▼
-                        │    Output    │◀────┌─────────────────┐
-                        │  (matplotlib)│     │   Rendering     │
-                        └──────────────┘     │  (matplotlib)   │
-                                             └─────────────────┘
+                                                      │
+                         ┌──────────────┐             ▼
+                         │    输出      │◀────┌─────────────────┐
+                         │  (matplotlib)│     │   渲染          │
+                         └──────────────┘     │  (matplotlib)   │
+                                              └─────────────────┘
 ```
 
-### Key Functions
+### 关键函数
 
-| Function | Purpose | Modify when... |
-|----------|---------|----------------|
-| `get_coordinates()` | City → lat/lon via Nominatim | Switching geocoding provider |
-| `create_poster()` | Main rendering pipeline | Adding new map layers |
-| `get_edge_colors_by_type()` | Road color by OSM highway tag | Changing road styling |
-| `get_edge_widths_by_type()` | Road width by importance | Adjusting line weights |
-| `create_gradient_fade()` | Top/bottom fade effect | Modifying gradient overlay |
-| `load_theme()` | JSON theme → dict | Adding new theme properties |
+| 函数 | 用途 | 修改时机 |
+|------|------|----------|
+| `get_coordinates()` | 通过 Nominatim 将城市转为坐标 | 更换地理编码服务 |
+| `create_poster()` | 主渲染流程 | 添加新地图图层 |
+| `get_edge_colors_by_type()` | 根据 OSM highway 标签着色 | 修改道路样式 |
+| `get_edge_widths_by_type()` | 根据重要性设置道路宽度 | 调整线条粗细 |
+| `create_gradient_fade()` | 顶部/底部渐变效果 | 修改渐变覆盖层 |
+| `load_theme()` | JSON 主题转为字典 | 添加新主题属性 |
 
-### Rendering Layers (z-order)
+### 渲染层级 (z-order)
 
 ```
-z=11  Text labels (city, country, coords)
-z=10  Gradient fades (top & bottom)
-z=3   Roads (via ox.plot_graph)
-z=2   Parks (green polygons)
-z=1   Water (blue polygons)
-z=0   Background color
+z=11  文字标签（城市、国家、坐标）
+z=10  渐变效果（顶部和底部）
+z=3   道路（通过 ox.plot_graph）
+z=2   公园（绿色多边形）
+z=1   水域（蓝色多边形）
+z=0   背景色
 ```
 
-### OSM Highway Types → Road Hierarchy
+### OSM 道路类型 → 道路层级
 
 ```python
-# In get_edge_colors_by_type() and get_edge_widths_by_type()
-motorway, motorway_link     → Thickest (1.2), darkest
-trunk, primary              → Thick (1.0)
-secondary                   → Medium (0.8)
-tertiary                    → Thin (0.6)
-residential, living_street  → Thinnest (0.4), lightest
+# 在 get_edge_colors_by_type() 和 get_edge_widths_by_type() 中
+motorway, motorway_link     → 最粗 (1.2)，最深色
+trunk, primary              → 粗 (1.0)
+secondary                   → 中等 (0.8)
+tertiary                    → 细 (0.6)
+residential, living_street  → 最细 (0.4)，最浅色
 ```
 
-### Adding New Features
+### 添加新功能
 
-**New map layer (e.g., railways):**
+**新地图图层（如铁路）：**
 ```python
-# In create_poster(), after parks fetch:
+# 在 create_poster() 中，获取公园后：
 try:
     railways = ox.features_from_point(point, tags={'railway': 'rail'}, dist=dist)
 except:
     railways = None
 
-# Then plot before roads:
+# 然后在道路前绘制：
 if railways is not None and not railways.empty:
     railways.plot(ax=ax, color=THEME['railway'], linewidth=0.5, zorder=2.5)
 ```
 
-**New theme property:**
-1. Add to theme JSON: `"railway": "#FF0000"`
-2. Use in code: `THEME['railway']`
-3. Add fallback in `load_theme()` default dict
+**新主题属性：**
+1. 添加到主题 JSON：`"railway": "#FF0000"`
+2. 在代码中使用：`THEME['railway']`
+3. 在 `load_theme()` 默认字典中添加回退值
 
-### Typography Positioning
+### 文字定位
 
-All text uses `transform=ax.transAxes` (0-1 normalized coordinates):
+所有文字使用 `transform=ax.transAxes`（0-1 归一化坐标）：
 ```
-y=0.14  City name (spaced letters)
-y=0.125 Decorative line
-y=0.10  Country name
-y=0.07  Coordinates
-y=0.02  Attribution (bottom-right)
+y=0.14  城市名称（字间距）
+y=0.125 装饰线
+y=0.10  国家名称
+y=0.07  坐标
+y=0.02  来源标注（右下角）
 ```
 
-### Useful OSMnx Patterns
+### OSMnx 常用模式
 
 ```python
-# Get all buildings
+# 获取所有建筑
 buildings = ox.features_from_point(point, tags={'building': True}, dist=dist)
 
-# Get specific amenities
+# 获取特定设施
 cafes = ox.features_from_point(point, tags={'amenity': 'cafe'}, dist=dist)
 
-# Different network types
-G = ox.graph_from_point(point, dist=dist, network_type='drive')  # roads only
-G = ox.graph_from_point(point, dist=dist, network_type='bike')   # bike paths
-G = ox.graph_from_point(point, dist=dist, network_type='walk')   # pedestrian
+# 不同网络类型
+G = ox.graph_from_point(point, dist=dist, network_type='drive')  # 仅道路
+G = ox.graph_from_point(point, dist=dist, network_type='bike')   # 自行车道
+G = ox.graph_from_point(point, dist=dist, network_type='walk')   # 步行道
 ```
 
-### Performance Tips
+### 性能提示
 
-- Large `dist` values (>20km) = slow downloads + memory heavy
-- Cache coordinates locally to avoid Nominatim rate limits
-- Use `network_type='drive'` instead of `'all'` for faster renders
-- Reduce `dpi` from 300 to 150 for quick previews
+- 大 `dist` 值 (>20km) = 下载慢 + 内存占用高
+- 本地缓存坐标以避免 Nominatim 速率限制
+- 使用 `network_type='drive'` 而非 `'all'` 以加快渲染
+- 将 `dpi` 从 300 降至 150 以快速预览

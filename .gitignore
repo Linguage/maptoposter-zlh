@@ -2,4 +2,4 @@
 cache/*
 env/
 .env/
-posters/
+generated_posters/

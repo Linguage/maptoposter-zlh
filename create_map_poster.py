@@ -14,7 +14,7 @@ import argparse
 
 THEMES_DIR = "themes"
 FONTS_DIR = "fonts"
-POSTERS_DIR = "posters"
+DEFAULT_OUTPUT_DIR = "generated_posters"
 
 def load_fonts():
     """
@@ -37,17 +37,17 @@ def load_fonts():
 
 FONTS = load_fonts()
 
-def generate_output_filename(city, theme_name):
+def generate_output_filename(city, theme_name, output_dir=DEFAULT_OUTPUT_DIR):
     """
     Generate unique output filename with city, theme, and datetime.
     """
-    if not os.path.exists(POSTERS_DIR):
-        os.makedirs(POSTERS_DIR)
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
     
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     city_slug = city.lower().replace(' ', '_')
     filename = f"{city_slug}_{theme_name}_{timestamp}.png"
-    return os.path.join(POSTERS_DIR, filename)
+    return os.path.join(output_dir, filename)
 
 def get_available_themes():
     """
@@ -547,6 +547,7 @@ Examples:
     parser.add_argument('--stretch', '-s', action='store_true', help='Stretch mode: download 1:1 data then stretch to target ratio (default: crop mode downloads data matching ratio)')
     parser.add_argument('--landmark', '-l', type=str, help='Landmark name to center the map on (e.g., "Forbidden City", "Tiananmen Square")')
     parser.add_argument('--coords', type=str, help='Custom center coordinates as "lat,lon" (e.g., "39.91,116.40")')
+    parser.add_argument('--output-dir', '-o', type=str, default=DEFAULT_OUTPUT_DIR, help='Directory for generated posters (default: generated_posters)')
     parser.add_argument('--list-themes', action='store_true', help='List all available themes')
     
     args = parser.parse_args()
@@ -584,7 +585,7 @@ Examples:
     # Get coordinates and generate poster
     try:
         coords = get_coordinates(args.city, args.country, args.landmark, args.coords)
-        output_file = generate_output_filename(args.city, args.theme)
+        output_file = generate_output_filename(args.city, args.theme, args.output_dir)
         create_poster(args.city, args.country, coords, args.distance, output_file, args.ratio, args.stretch)
         
         print("\n" + "=" * 50)
