@@ -41,12 +41,17 @@ python create_map_poster.py --city <city> --country <country> [options]
 | `--city` | `-c` | City name | required |
 | `--country` | `-C` | Country name | required |
 | `--theme` | `-t` | Theme name | feature_based |
+| `--all-themes` | | Generate posters for every theme | off |
 | `--distance` | `-d` | Map radius in meters | 29000 |
 | `--ratio` | `-r` | Aspect ratio as width:height | 1:1 |
 | `--landmark` | `-l` | Landmark name | none |
 | `--coords` | | Custom coordinates as "lat,lon" | none |
 | `--stretch` | `-s` | Stretch mode flag | off |
 | `--output-dir` | `-o` | Output directory | generated_posters |
+| `--display-city` | | Override displayed city name | none |
+| `--display-country` | | Override displayed country name | none |
+| `--font-family` | | Download and use a Google Fonts family | Roboto |
+| `--format` | `-f` | Output format | png |
 | `--list-themes` | | List all available themes | |
 
 ### Examples
@@ -88,6 +93,15 @@ python create_map_poster.py -c "Beijing" -C "China" -t noir -l "Tiananmen Square
 # Custom coordinates
 python create_map_poster.py -c "Beijing" -C "China" -t noir --coords "39.91,116.40"
 
+# Multilingual labels with Google Fonts
+python create_map_poster.py -c "Tokyo" -C "Japan" --display-city "東京" --font-family "Noto Sans JP"
+
+# Vector output
+python create_map_poster.py -c "Venice" -C "Italy" -t blueprint --format svg
+
+# Generate every available theme
+python create_map_poster.py -c "Paris" -C "France" --all-themes -d 10000
+
 # List available themes
 python create_map_poster.py --list-themes
 ```
@@ -102,7 +116,7 @@ python create_map_poster.py --list-themes
 
 ## Themes
 
-17 themes available in `themes/` directory:
+18 themes available in `themes/` directory:
 
 | Theme | Style |
 |-------|-------|
@@ -113,6 +127,7 @@ python create_map_poster.py --list-themes
 | `midnight_blue` | Navy background with gold roads |
 | `blueprint` | Architectural blueprint aesthetic |
 | `neon_cyberpunk` | Dark with electric pink/cyan |
+| `emerald` | Deep green palette with mint highlights |
 | `warm_beige` | Vintage sepia tones |
 | `pastel_dream` | Soft muted pastels |
 | `japanese_ink` | Minimalist ink wash style |
@@ -130,9 +145,11 @@ Generated posters are saved to `generated_posters/` by default. The script creat
 
 The `posters/` directory is reserved for curated sample images used in the README.
 
+If you use `--font-family`, downloaded Google Fonts are cached under `fonts/cache/`, which is also ignored by git.
+
 Output filename format:
 ```
-{city}_{theme}_{YYYYMMDD_HHMMSS}.png
+{city}_{theme}_{YYYYMMDD_HHMMSS}.{png|svg|pdf}
 ```
 
 ## Adding Custom Themes
@@ -162,12 +179,21 @@ Create a JSON file in `themes/` directory:
 ```
 maptoposter/
 ├── create_map_poster.py     # Main script
+├── font_management.py       # Local fonts and Google Fonts cache helper
 ├── themes/                  # Theme JSON files
 ├── fonts/                   # Roboto font files
 ├── posters/                 # README sample posters
 ├── generated_posters/       # Local generated outputs (ignored)
-└── README.md
+└── cache/                   # Cached coordinates and OSM data
 ```
+
+## Recent Updates
+
+- Improved caching for coordinates, street networks, and area features.
+- Added `--font-family` with Google Fonts download and cache support.
+- Added `--format` for `png`, `svg`, and `pdf` output.
+- Added `--all-themes` for batch generation.
+- Added the `emerald` theme.
 
 ## Hacker's Guide
 

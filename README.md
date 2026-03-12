@@ -40,12 +40,17 @@ python create_map_poster.py --city <城市> --country <国家> [选项]
 | `--city` | `-c` | 城市名称 | 必需 |
 | `--country` | `-C` | 国家名称 | 必需 |
 | `--theme` | `-t` | 主题名称 | feature_based |
+| `--all-themes` | | 为全部主题批量生成海报 | 关闭 |
 | `--distance` | `-d` | 地图半径（米） | 29000 |
 | `--ratio` | `-r` | 画幅比例（宽:高） | 1:1 |
 | `--landmark` | `-l` | 地标名称 | 无 |
 | `--coords` | | 自定义坐标 "lat,lon" | 无 |
 | `--stretch` | `-s` | 拉伸模式标志 | 无 |
 | `--output-dir` | `-o` | 输出目录 | generated_posters |
+| `--display-city` | | 自定义展示城市名 | 无 |
+| `--display-country` | | 自定义展示国家名 | 无 |
+| `--font-family` | | 下载并使用 Google Fonts 字体 | Roboto |
+| `--format` | `-f` | 输出格式 | png |
 | `--list-themes` | | 列出所有主题 | |
 
 ### 使用示例
@@ -87,6 +92,15 @@ python create_map_poster.py -c "Beijing" -C "China" -t noir -l "Tiananmen Square
 # 自定义坐标
 python create_map_poster.py -c "Beijing" -C "China" -t noir --coords "39.91,116.40"
 
+# 多语言城市名与 Google Fonts
+python create_map_poster.py -c "Tokyo" -C "Japan" --display-city "东京" --font-family "Noto Sans JP"
+
+# 输出为矢量格式
+python create_map_poster.py -c "Venice" -C "Italy" -t blueprint --format svg
+
+# 批量生成全部主题
+python create_map_poster.py -c "Paris" -C "France" --all-themes -d 10000
+
 # 列出所有主题
 python create_map_poster.py --list-themes
 ```
@@ -99,7 +113,7 @@ python create_map_poster.py --list-themes
 | 8000-12000m | 中等城市、聚焦市中心（巴黎、巴塞罗那） |
 | 15000-20000m | 大都市、完整城市视图（东京、孟买） |
 
-## 17种主题
+## 18种主题
 
 | 主题名称 | 风格描述 |
 |:---------|:---------|
@@ -110,6 +124,7 @@ python create_map_poster.py --list-themes
 | `midnight_blue` | 深海军蓝背景配金/铜色道路，奢华地图集美学 |
 | `blueprint` | 经典建筑蓝图，技术绘图美学 |
 | `neon_cyberpunk` | 深色背景配电光粉/青色，大胆夜城氛围 |
+| `emerald` | 深绿主调配薄荷高光，适合高对比夜景 |
 | `warm_beige` | 温暖中性调配棕褐色，复古地图美学 |
 | `pastel_dream` | 柔和粉彩配灰蓝和淡紫，梦幻艺术美学 |
 | `japanese_ink` | 传统水墨风格，极简主义配微红点缀 |
@@ -127,9 +142,11 @@ python create_map_poster.py --list-themes
 
 `posters/` 目录仅保留 README 中展示用的示例海报，并会同步到仓库。
 
+如果使用 `--font-family` 下载 Google Fonts，缓存文件会写入 `fonts/cache/`，该目录同样已加入忽略规则。
+
 输出文件格式：
 ```
-{城市}_{主题}_{YYYYMMDD_HHMMSS}.png
+{城市}_{主题}_{YYYYMMDD_HHMMSS}.{png|svg|pdf}
 ```
 
 ## 添加自定义主题
@@ -159,6 +176,7 @@ python create_map_poster.py --list-themes
 ```
 maptoposter/
 ├── create_map_poster.py    # 主程序脚本
+├── font_management.py      # 字体加载与 Google Fonts 缓存
 ├── themes/                 # 主题 JSON 文件
 ├── fonts/                  # Roboto 字体文件
 ├── posters/                # README 示例海报
@@ -166,11 +184,13 @@ maptoposter/
 └── cache/                  # 缓存目录
 ```
 
-## 最近修改 (2025-01-19)
+## 最近修改
 
-- **API超时修复** - 超时时间从1秒增加到10秒
-- **坐标定位优化** - 优先选择城市级结果，修复大城市定位偏移问题
-- **自定义画幅功能** - 新增 `--ratio` 参数支持任意比例
+- **缓存能力增强** - 坐标、道路网络和地物数据会缓存到 `cache/`
+- **字体支持增强** - 新增 `--font-family`，可按需下载并缓存 Google Fonts
+- **输出能力增强** - 新增 `--format` 支持 `png`、`svg`、`pdf`
+- **批量生成主题** - 新增 `--all-themes`
+- **新增主题** - 新增 `emerald` 主题
 
 ## 技术细节
 

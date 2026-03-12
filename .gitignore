@@ -1,5 +1,12 @@
 .DS_Store
+AGENTS.md
+.vscode/
 cache/*
 env/
 .env/
+.venv/
+venv/
+__pycache__/
+*.pyc
+fonts/cache/
 generated_posters/
